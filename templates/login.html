@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login or Register</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #6dd5ed, #2193b0);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #333; /* 黑色 */
+            margin: 0;
+            padding: 20px 0; /* 调整上下方的间距 */
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            background-color: #2193b0;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #1a7a95;
+        }
+        .alert {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            color: #333;
+            background-color: #f8d7da;
+            border: 1px solid #f5c2c7;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        .alert-error {
+            background-color: #f8d7da;
+            border-color: #f5c2c7;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .alert.show {
+            opacity: 1;
+        }
+
+        .alert.hide {
+            opacity: 0;
+            display: none;
+        }
+        /* 添加标题样式 */
+        .title {
+            font-weight: bold;
+            color: #333; /* 黑色 */
+            text-align: center;
+            animation: fadeIn 2s ease-in-out; /* 应用动画 */
+        }
+
+        /* 添加动态渐变文字样式 */
+        .gradient-text {
+            font-size: 2em;
+            text-align: center;
+            background-image: linear-gradient(to right, #6dd5ed, #2193b0);
+            -webkit-background-clip: text;
+            color: #333; /* 黑色，如果需要保持渐变效果，可以设置为 transparent */
+            -webkit-text-fill-color: transparent; /* 这行仅在 WebKit 浏览器中有效 */
+            margin: 0;
+            animation: fadeIn 3s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 显示 flash 消息 -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            });
+        </script>
+        <!-- 动态渐变文字 -->
+        <h1 class="gradient-text">电力设备预测维护系统</h1>
+        
+        <!-- 用户登录标题 -->
+        <h2 class="title">用户登录</h2>
+        
+        
+        
+        <!-- 登录表单 -->
+        <form action="{{ url_for('login') }}" method="post" autocomplete="off">
+            <input type="text" id="username" name="username" placeholder="Username" required>
+            <input type="password" id="password" name="password" placeholder="Password" required autocomplete="new-password">
+            <input type="submit" value="Login">
+        </form>
+        <!-- 注册表单 -->
+        <form action="{{ url_for('register_page') }}" method="get" >
+            <input type="submit" value="Register">
+        </form>
+        <!-- <div style="text-align: center; margin-top: 10px;">
+            还没有账号？<a href="{{ url_for('register_page') }}">注册</a>
+        </div> -->
+        
+    </div>
+</body>
+</html>
